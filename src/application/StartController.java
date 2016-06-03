@@ -6,18 +6,17 @@ import java.io.PrintWriter;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
-import javafx.geometry.Orientation;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollBar;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 
@@ -37,6 +36,8 @@ public class StartController implements Initializable {
 	private TextField txtNazwaPliku = new TextField("PlikJson");
 	TextField[][] tabDate;
 			ScrollBar sb = new ScrollBar(); 
+			ScrollPane sp= new ScrollPane(); 
+			HBox hb = new HBox(); 
 
 	@FXML
 	public void viewCreator() {
@@ -46,6 +47,8 @@ public class StartController implements Initializable {
 		try {
 			tabDate = new TextField[width][height];
 			GridPane gp = new GridPane();
+//			hb.setPadding(new Insets(10));
+			hb.setSpacing(10);
 			for (int i = 0; i < width; i++) {
 				for (int j = 0; j < height; j++) {
 					// GridPane.setConstraints(tabDate[i][j], height,width);
@@ -56,25 +59,31 @@ public class StartController implements Initializable {
 					gp.add(tabDate[i][j], i, j);
 				}
 			}
-			gp.add(btnCreateJson, 2, height + 1);
-			gp.add(btnKatalog, 1, height + 1);
 			txtNazwaPliku.setPromptText("nazwa pliku");
-			gp.add(txtNazwaPliku, 0, height + 1);
-			gp.add(btnCofnij, 3, height + 1);
+			hb.getChildren().addAll(txtNazwaPliku,btnKatalog,btnCreateJson, btnCofnij); 
+			
+			
+//			gp.add(btnCreateJson, 2, height + 1);
+//			gp.add(btnKatalog, 1, height + 1);
+//			gp.add(txtNazwaPliku, 0, height + 1);
+//			gp.add(btnCofnij, 3, height + 1);
 			// scroll bar gdy przewijami gp sie zmienia
-			sb.setOrientation(Orientation.VERTICAL);
-			sb.valueProperty().addListener(new ChangeListener<Number>() {
-			    public void changed(ObservableValue<? extends Number> ov,
-			        Number old_val, Number new_val) {
-			            gp.setLayoutY(-new_val.doubleValue()*3);
-			        }
-			});
-			gp.add(sb,width+1,0,1,height/2);
+//			sb.setOrientation(Orientation.VERTICAL);
+//			sb.valueProperty().addListener(new ChangeListener<Number>() {
+//			    public void changed(ObservableValue<? extends Number> ov,
+//			        Number old_val, Number new_val) {
+//			            gp.setLayoutY(-new_val.doubleValue()*3);
+//			        }
+//			});
+//			gp.add(sb,width+1,0,1,height/2);
+			gp.add(hb,0,height+1,width,1);
 			gp.setPadding(new Insets(10));
 			gp.setVgap(10);
 			gp.setHgap(10);
-			gp.setPrefWidth(600);
-			Scene scene = new Scene(gp);
+			gp.setMinWidth(600);
+			gp.setPrefWidth(width*150);
+			sp.setContent(gp);
+			Scene scene = new Scene(sp);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			Main.stage.setScene(scene);
 			Main.stage.show();

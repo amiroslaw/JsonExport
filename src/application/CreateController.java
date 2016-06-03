@@ -23,7 +23,7 @@ public  class CreateController extends StartController  implements Initializable
 //	}
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		// TODO Auto-generated method stub
+		// 
 //		Height.setText(Integer.toString(height));
 		btnViewStart.setOnAction(e-> viewStart());
 	}
